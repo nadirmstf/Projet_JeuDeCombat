@@ -1,0 +1,124 @@
+{
+  "monstres": [
+    {
+      "nom": "Gobelin",
+      "pv": 80,
+      "pouvoir": {
+        "nom": "Coup de dague",
+        "degats": 15
+      },
+      "ulti": {
+        "nom": "Attaque sauvage",
+        "degats": 35
+      }
+    },
+    {
+      "nom": "Orc",
+      "pv": 160,
+      "pouvoir": {
+        "nom": "Coup de hache",
+        "degats": 30
+      },
+      "ulti": {
+        "nom": "Rage destructrice",
+        "degats": 65
+      }
+    },
+    {
+      "nom": "Dragon noir",
+      "pv": 300,
+      "pouvoir": {
+        "nom": "Souffle de flammes",
+        "degats": 55
+      },
+      "ulti": {
+        "nom": "Annihilation draconique",
+        "degats": 120
+      }
+    },
+    {
+      "nom": "Squelette",
+      "pv": 70,
+      "pouvoir": {
+        "nom": "Frappe osseuse",
+        "degats": 20
+      },
+      "ulti": {
+        "nom": "Armée des morts",
+        "degats": 45
+      }
+    },
+    {
+      "nom": "Loup-garou",
+      "pv": 140,
+      "pouvoir": {
+        "nom": "Griffure féroce",
+        "degats": 30
+      },
+      "ulti": {
+        "nom": "Furie lunaire",
+        "degats": 70
+      }
+    },
+    {
+      "nom": "Troll",
+      "pv": 220,
+      "pouvoir": {
+        "nom": "Écrasement",
+        "degats": 35
+      },
+      "ulti": {
+        "nom": "Séisme brutal",
+        "degats": 75
+      }
+    },
+    {
+      "nom": "Spectre",
+      "pv": 100,
+      "pouvoir": {
+        "nom": "Toucher glacial",
+        "degats": 25
+      },
+      "ulti": {
+        "nom": "Terreur des âmes",
+        "degats": 60
+      }
+    },
+    {
+      "nom": "Golem de pierre",
+      "pv": 280,
+      "pouvoir": {
+        "nom": "Poing rocheux",
+        "degats": 40
+      },
+      "ulti": {
+        "nom": "Chute des montagnes",
+        "degats": 85
+      }
+    },
+    {
+      "nom": "Araignée géante",
+      "pv": 110,
+      "pouvoir": {
+        "nom": "Morsure empoisonnée",
+        "degats": 20
+      },
+      "ulti": {
+        "nom": "Toile mortelle",
+        "degats": 55
+      }
+    },
+    {
+      "nom": "Démon infernal",
+      "pv": 250,
+      "pouvoir": {
+        "nom": "Griffe enflammée",
+        "degats": 45
+      },
+      "ulti": {
+        "nom": "Enfer éternel",
+        "degats": 110
+      }
+    }
+  ]
+}

@@ -1,0 +1,124 @@
+{
+  "personnages": [
+    {
+      "nom": "Guerrier",
+      "pv": 150,
+      "pouvoir": {
+        "nom": "Coup puissant",
+        "degats": 25
+      },
+      "ulti": {
+        "nom": "Rage du berserker",
+        "degats": 60
+      }
+    },
+    {
+      "nom": "Mage",
+      "pv": 100,
+      "pouvoir": {
+        "nom": "Boule de feu",
+        "degats": 35
+      },
+      "ulti": {
+        "nom": "Météore",
+        "degats": 80
+      }
+    },
+    {
+      "nom": "Assassin",
+      "pv": 90,
+      "pouvoir": {
+        "nom": "Attaque furtive",
+        "degats": 40
+      },
+      "ulti": {
+        "nom": "Lame fantôme",
+        "degats": 90
+      }
+    },
+    {
+      "nom": "Paladin",
+      "pv": 180,
+      "pouvoir": {
+        "nom": "Frappe sacrée",
+        "degats": 20
+      },
+      "ulti": {
+        "nom": "Jugement divin",
+        "degats": 70
+      }
+    },
+    {
+      "nom": "Archer",
+      "pv": 110,
+      "pouvoir": {
+        "nom": "Flèche explosive",
+        "degats": 30
+      },
+      "ulti": {
+        "nom": "Pluie de flèches",
+        "degats": 75
+      }
+    },
+    {
+      "nom": "Ninja",
+      "pv": 105,
+      "pouvoir": {
+        "nom": "Shuriken",
+        "degats": 30
+      },
+      "ulti": {
+        "nom": "Danse des ombres",
+        "degats": 85
+      }
+    },
+    {
+      "nom": "Démon",
+      "pv": 160,
+      "pouvoir": {
+        "nom": "Griffe infernale",
+        "degats": 35
+      },
+      "ulti": {
+        "nom": "Apocalypse démoniaque",
+        "degats": 95
+      }
+    },
+    {
+      "nom": "Samouraï",
+      "pv": 140,
+      "pouvoir": {
+        "nom": "Tranchant du katana",
+        "degats": 40
+      },
+      "ulti": {
+        "nom": "Lame du dragon",
+        "degats": 85
+      }
+    },
+    {
+      "nom": "Élémentaliste",
+      "pv": 120,
+      "pouvoir": {
+        "nom": "Éclair élémentaire",
+        "degats": 35
+      },
+      "ulti": {
+        "nom": "Tempête des éléments",
+        "degats": 90
+      }
+    },
+    {
+      "nom": "Vampire",
+      "pv": 130,
+      "pouvoir": {
+        "nom": "Morsure sanglante",
+        "degats": 30
+      },
+      "ulti": {
+        "nom": "Étreinte éternelle",
+        "degats": 80
+      }
+    }
+  ]
+}
