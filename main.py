@@ -7,74 +7,64 @@ db = client["test"]
 personnages = list(db["personnages"].find())
 monstres = list(db["monstres"].find())
 
-
+MENU = ["Jouer","meilleurs scores", "quitter"]
 
 #menu
-    #afficher des proposition
-    #demander un choix
-    #verifier si le choix est valide
-    #lancer le choix
- 
+    #tant que vrais
+        #recuperer un choix valide parmis options(MENU)
+        #lancer le choix
+
+
+
+
+#afficher des proposition(MENU)
+    #pour i, proposition dans enumerate(MENU, i)
+    #afficher i " - " proposition
+    #i = i + 1
+    #retourner i
+
+
+#demander un choix valide(options)
+    #tant que vrai
+        # afficher les options numeroter
+        # choix = input("entrez votre choix")
+        # si choix valide(taille des options)
+        #   retourner le choix
+        # afficher message d'erreur
+
+
+#verifier si choix est valide
+    #si choix n'est pas isdigit()
+        #retourner faux
+
+    #convertir en entier
+    #si choix n'est pas compris entre 1 inclus et le nombre de choix inclus
+        #retourner faux
+
+    #retourner vrais
+
+
+#lancer le choix
+    #si choix == 1
+        #jeu
+    #si choix == 2
+        #meilleurs scores
+    #si choix == 3
+        #retourner faux
+
+
+
+
+
 #jeu
     #démarrage du jeu
     #lancer le combat
+    #resultat
 
 
 #démarrage du jeu
     #demander un pseudo
-    #demander un nom d'équipe
-    #afficher les heros
-    #demander de choisir 3 heros
-    #les ajoutés a la liste team_heros
-    #afficher l'equipe des heros
-    #choisir les monstres de maniere random
-    #les ajoutés a la liste team_monstres
-    #afficher le nom de l'équipe et contre qu'elle équipe de monstres elle va se battre
-    #definir qui commence en premier de maniere random
-    #afficher qui commence en premier
-
-
-#lancer le combat
-    #tant que vrai
-        #afficher les personnage disponible
-        #si c'est le tour des monstres
-            #les monstres attaque en random
-        #si c'est le tour des hero
-            #les heros attaquent
-
-
-#les heros attanquent
-    #demander quelle hero attaque
-    #si hero mort
-        #message d'erreur
-    #si hero vivant
-        #afficher les possibilité d'attaque
-        #verifier si le choix est valide
-        #lancer le choix
-        #enlever des pv en fonction de l'attaque choisi
-
-        #pour hero dans la liste team_heros
-            #si statut = "mort"
-                #afficher message de défaites
-                #retourner faux
-            #si statut = "vivant"
-                #retourner vrais
-        
-        #pour monstre dans l'équipe team_monstres
-            #si statut = "mort"
-                #afficher message de victoire
-                #retourner faux
-            #si statut = "vivant"
-                #retourner vrais
-
-        #si pv du hero attaqué = 0
-            #statut mort
-            #afficher se hero est mort
-
-        #si pv du monstre attaqué = 0
-            #statut mort
-            #afficher se monstre est mort
-
-        #sinon
-            #afficher se personnage a perdu x pv
-
+    #créer équipe heros
+    #créer équipe monstres
+    #afficher équipe heros vs équipe monstres
+    #définir le premier qui attaque
