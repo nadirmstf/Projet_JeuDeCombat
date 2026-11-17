@@ -68,3 +68,25 @@ MENU = ["Jouer","meilleurs scores", "quitter"]
     #créer équipe monstres
     #afficher équipe heros vs équipe monstres
     #définir le premier qui attaque
+
+
+#créer équipe heros
+    #demander un nom d'équipe
+    #demander un nombre de combattant (max 5)
+    #tant que i n'est pas égale nombre de combattant
+        #recuperer un choix valide parmis options(Personnages)
+
+
+#créer équipe monstres
+    #choisir un nom random
+    #tant que i n'est pas égale nombre de combattant
+        #choisir une équipe random
+
+
+#choisir un nom random
+    #i = chiffre random compris entre 1 et le nombre totale de nom possible
+    #nom = liste de nom [i]
+
+#choisir une équipe random
+    #i = chiffre random compris entre 1 et le nombre totale de monstre dans la liste monstres
+    #nom = liste de monstres [i]
