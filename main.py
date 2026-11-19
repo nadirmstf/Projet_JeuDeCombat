@@ -12,48 +12,50 @@ MENU = ["Jouer","meilleurs scores", "quitter"]
 
 derniers_scores = []
 
-#menu
-    #tant que vrais
-        #recuperer un choix valide parmis options(MENU)
-        #lancer le choix
+def menu():
+    while True:
+        choix = demander_choix_valide(MENU)
+        lancer_le_choix(choix)
 
 
 
 
-#afficher des proposition(MENU)
-    #pour i, proposition dans enumerate(MENU, i)
-    #afficher i " - " proposition
-    #i = i + 1
-    #retourner i
+def afficher_des_propositions(propositions):
+    for i, proposition in enumerate(propositions):
+        print(i, " - ", proposition)
+        i =+ 1
+        return i
 
 
-#demander un choix valide(options)
-    #tant que vrai
-        # afficher les options numeroter
-        # choix = input("entrez votre choix")
-        # si choix valide(taille des options)
-        #   retourner le choix
-        # afficher message d'erreur
+def demander_choix_valide(option):
+    while True :
+        afficher_des_propositions(option)
+        choix = input("entrez votre choix : ")
+        verifier_si_choix_valide(choix, option)
+        print("erreur, réessayez !")
 
 
-#verifier si choix est valide
-    #si choix n'est pas isdigit()
-        #retourner faux
+def verifier_si_choix_valide(choix, liste_choix):
+    if not choix.isdigit():
+        return False
 
-    #convertir en entier
-    #si choix n'est pas compris entre 1 inclus et le nombre de choix inclus
-        #retourner faux
+    choix = int(choix)
+    if not 1 <= choix < len(liste_choix):
+        return False
 
-    #retourner vrais
+    return True
 
 
-#lancer le choix
-    #si choix == 1
+def lancer_le_choix(choix):
+    if choix == 1 :
         #jeu
-    #si choix == 2
+        print("vous avez choisis 1 !")
+    elif choix == 2 :
         #meilleurs scores
-    #si choix == 3
+        print("vous avez choisis 2 !")
+    elif choix == 3 :
         #retourner faux
+        print("vous avez choisis 3 !")
 
 
 
@@ -71,7 +73,7 @@ derniers_scores = []
     #créer équipe monstres
     #afficher équipe heros vs équipe monstres
     #définir le premier qui attaque
-    #retourner la liste hero, la liste monstre et le nom des équipe 
+    #retourner la liste hero, la liste monstre, le nom des équipe et equipe_commence
 
 
 
@@ -102,6 +104,7 @@ derniers_scores = []
     #verifier si choix est valide
     #retourner le nombre de combattant choisis
 
+
 #recuperer un choix valide parmis options(Personnages)
     #afficher des proposition(hero_disponibles)
     #input(quel combattant voulez vous ?)
@@ -128,11 +131,13 @@ derniers_scores = []
 #définir le premier qui attaque
     #i = choix random entre vrais et faux
     #si i == vrais
+        #equipe_commence == vrais
         #afficher joueur attaque en premier
-        #retourner i
+        #retourner equipe_commence
 
+    #equipe_commence == faux    
     #afficher monstres attaquent en premier
-    #retourner i
+    #retourner equipe_commence
 
 
 
@@ -160,8 +165,13 @@ derniers_scores = []
     #manche = 1
     #tant que statut_equipe_hero == vrais
         #mort = []
-        #tour heros
-        #tour monstres
+        #si equipe_commence == vrais :
+            #tour heros
+            #tour monstres
+
+        #sinon:
+            #tour monstres
+            #tour heros
 
     #retourner manche
 
@@ -169,7 +179,6 @@ derniers_scores = []
 
 
 #tour heros
-    #si i == vrais alors
         #equipe_hero_en_jeux = determiner disponibilité ( equipe_hero, mort)
         #monstres_en_jeux = determiner disponibilité ( equipe_monstres, mort)
         #verifier mort equipe monstres
@@ -178,7 +187,6 @@ derniers_scores = []
 
 
 #tour monstres
-    #si i == faux alors
         #equipe_hero_en_jeux = determiner disponibilité ( equipe_hero, mort)
         #monstres_en_jeux = determiner disponibilité ( equipe_monstres, mort)
         #verifier mort equipe monstres
@@ -266,3 +274,14 @@ derniers_scores = []
 #resultat
     #afficher message d'encouragement, et nombre de manche reussite
     #ajouter à derniers_scores
+
+
+
+
+
+
+
+
+
+
+menu()
