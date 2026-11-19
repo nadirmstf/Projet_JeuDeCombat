@@ -6,6 +6,7 @@ db = client["test"]
 
 personnages = list(db["personnages"].find())
 monstres = list(db["monstres"].find())
+nom_random_monstres =[]
 
 MENU = ["Jouer","meilleurs scores", "quitter"]
 
@@ -58,7 +59,7 @@ MENU = ["Jouer","meilleurs scores", "quitter"]
 
 #jeu
     #démarrage du jeu
-    #lancer le combat
+    #combat
     #resultat
 
 
@@ -68,25 +69,74 @@ MENU = ["Jouer","meilleurs scores", "quitter"]
     #créer équipe monstres
     #afficher équipe heros vs équipe monstres
     #définir le premier qui attaque
+    #retourner la liste hero, la liste monstre, le nom des équipe et i
+
 
 
 #créer équipe heros
+    #hero = []
     #demander un nom d'équipe
-    #demander un nombre de combattant (max 5)
-    #tant que i n'est pas égale nombre de combattant
+    #demander un nombre de combattant valide (max 5)
+    #tant que i n'est pas égale nombre de combattant choisis
         #recuperer un choix valide parmis options(Personnages)
+        #ajouter le personnage a la liste hero
+    #retourner la liste hero et nom d'équipe
+
+#demander un nombre de combattant valide (max 5)
+    #input("combien de combattant voulez vous ? maximum 5")
+    #verifier si choix est valide
+    #retourner le nombre de combattant choisis
+
+#recuperer un choix valide parmis options(Personnages)
+    #input(quel combattant voulez vous ?)
+    #verifier si choix est valide
+    #retourner le choix
+
 
 
 #créer équipe monstres
+    #équipe_monstres = []
     #choisir un nom random
-    #tant que i n'est pas égale nombre de combattant
-        #choisir une équipe random
+    #tant que i n'est pas égale a la longueure de la liste hero
+        #choisir un monstre random
+        #ajouter le monstre a la liste équipe_monstres
+    #retourner équipe monstres et nom random
 
 
 #choisir un nom random
     #i = chiffre random compris entre 1 et le nombre totale de nom possible
     #nom = liste de nom [i]
+    #retourner nom
 
-#choisir une équipe random
+
+#choisir un monstre random
     #i = chiffre random compris entre 1 et le nombre totale de monstre dans la liste monstres
-    #nom = liste de monstres [i]
+    #monstre = liste de monstres [i]
+    #retourner monstre
+
+
+#définir le premier qui attaque
+    #i = choisir un chiffre random entre 1 et 2
+    #si i == 1
+        #afficher joueur attaque en premier
+        #retourner i
+    #afficher monstres attaquent en premier
+    #retourner i
+
+
+
+
+
+
+
+
+
+
+
+#combat
+    #tant que vrais
+        #afficher a qui le tour
+        #choisir l'attaque
+        #verifier si personnage mort
+        #verifier si équipe morte
+        #resultat de l'attaque
