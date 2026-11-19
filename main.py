@@ -69,18 +69,30 @@ MENU = ["Jouer","meilleurs scores", "quitter"]
     #créer équipe monstres
     #afficher équipe heros vs équipe monstres
     #définir le premier qui attaque
-    #retourner la liste hero, la liste monstre, le nom des équipe et i
+    #retourner la liste hero, la liste monstre et le nom des équipe 
 
 
 
 #créer équipe heros
-    #hero = []
+    #equipe_heros = []
     #demander un nom d'équipe
     #demander un nombre de combattant valide (max 5)
     #tant que i n'est pas égale nombre de combattant choisis
-        #recuperer un choix valide parmis options(Personnages)
+        #heros_disponibles = determiner disponibilité (personnage, personnages, equipe)
+        #recuperer un choix valide parmis options(heros_disponibles)
         #ajouter le personnage a la liste hero
     #retourner la liste hero et nom d'équipe
+
+
+
+#determiner disponibilité (elements, liste_A, liste_B)
+    #disponible
+    #pour elements dans liste_A
+        #si elements n'est pas dans liste_B
+            #ajouter elements dans disponible
+            #retourner disponible
+
+
 
 #demander un nombre de combattant valide (max 5)
     #input("combien de combattant voulez vous ? maximum 5")
@@ -88,10 +100,10 @@ MENU = ["Jouer","meilleurs scores", "quitter"]
     #retourner le nombre de combattant choisis
 
 #recuperer un choix valide parmis options(Personnages)
+    #afficher des proposition(hero_disponibles)
     #input(quel combattant voulez vous ?)
     #verifier si choix est valide
     #retourner le choix
-
 
 
 #créer équipe monstres
@@ -133,10 +145,44 @@ MENU = ["Jouer","meilleurs scores", "quitter"]
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #combat
     #tant que vrais
-        #afficher a qui le tour
-        #choisir l'attaque
-        #verifier si personnage mort
-        #verifier si équipe morte
-        #resultat de l'attaque
+        #mort = []
+        #si i == 1 alors
+            #afficher c'est au tour des heros
+            #equipe_hero_en_jeux = determiner disponibilité (hero, equipe_hero, mort)
+            #monstres_en_jeux = determiner disponibilité (monstre, equipe_monstres, mort)
+            #choisir sur qui lancer l'attaque
+            #choisir quel hero attaque
+            #verifier si personnage mort
+            #verifier si équipe morte
+            #resultat de l'attaque
+
+        #si i == 2 alors
+            #afficher c'est au tour des monstres
+
+
+
+
+#choisir sur qui lancer l'attaque
+    #afficher des proposition(monstres_en_jeux)
+    #monstre_attaqué = demander un choix valide(options)
+
+
+#choisir quel hero attaque
+    #afficher des proposition(equipe_hero_en_jeux)
+    #hero_qui_attaque = demander un choix valide(options)
