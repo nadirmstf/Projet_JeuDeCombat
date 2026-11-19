@@ -10,6 +10,8 @@ nom_random_monstres =[]
 
 MENU = ["Jouer","meilleurs scores", "quitter"]
 
+derniers_scores = []
+
 #menu
     #tant que vrais
         #recuperer un choix valide parmis options(MENU)
@@ -90,7 +92,8 @@ MENU = ["Jouer","meilleurs scores", "quitter"]
     #pour elements dans liste_A
         #si elements n'est pas dans liste_B
             #ajouter elements dans disponible
-            #retourner disponible
+    
+    #retourner disponible
 
 
 
@@ -115,23 +118,19 @@ MENU = ["Jouer","meilleurs scores", "quitter"]
     #retourner équipe monstres et nom random
 
 
-#choisir un nom random
+#choix random (list)
     #i = chiffre random compris entre 1 et le nombre totale de nom possible
-    #nom = liste de nom [i]
+    #element_choisis = liste de nom [i]
     #retourner nom
 
 
-#choisir un monstre random
-    #i = chiffre random compris entre 1 et le nombre totale de monstre dans la liste monstres
-    #monstre = liste de monstres [i]
-    #retourner monstre
-
 
 #définir le premier qui attaque
-    #i = choisir un chiffre random entre 1 et 2
-    #si i == 1
+    #i = choix random entre vrais et faux
+    #si i == vrais
         #afficher joueur attaque en premier
         #retourner i
+
     #afficher monstres attaquent en premier
     #retourner i
 
@@ -157,32 +156,113 @@ MENU = ["Jouer","meilleurs scores", "quitter"]
 
 
 
-
-
 #combat
-    #tant que vrais
+    #manche = 1
+    #tant que statut_equipe_hero == vrais
         #mort = []
-        #si i == 1 alors
-            #afficher c'est au tour des heros
-            #equipe_hero_en_jeux = determiner disponibilité (hero, equipe_hero, mort)
-            #monstres_en_jeux = determiner disponibilité (monstre, equipe_monstres, mort)
-            #choisir sur qui lancer l'attaque
-            #choisir quel hero attaque
-            #verifier si personnage mort
-            #verifier si équipe morte
-            #resultat de l'attaque
+        #tour heros
+        #tour monstres
 
-        #si i == 2 alors
-            #afficher c'est au tour des monstres
+    #retourner manche
 
 
+
+
+#tour heros
+    #si i == vrais alors
+        #equipe_hero_en_jeux = determiner disponibilité ( equipe_hero, mort)
+        #monstres_en_jeux = determiner disponibilité ( equipe_monstres, mort)
+        #verifier mort equipe monstres
+        #afficher "c'est au tour des heros"
+        #attaque
+
+
+#tour monstres
+    #si i == faux alors
+        #equipe_hero_en_jeux = determiner disponibilité ( equipe_hero, mort)
+        #monstres_en_jeux = determiner disponibilité ( equipe_monstres, mort)
+        #verifier mort equipe monstres
+        #afficher c'est au tour des monstres
+        #attaque random
+        #equipe_hero_en_jeux = determiner disponibilité ( equipe_hero, mort)
+        #verification mort equipe_hero
+
+
+#attaque random
+    #choix random sur qui lancer l'attaque
+    #choix random de qui lance l'attaque
+    #retirer des pv (hero_qui_attaque, monstre_attaqué)
+    #resultat de l'attaque
+
+
+#attaque
+    #choisir sur qui lancer l'attaque
+    #choisir quel hero attaque
+    #retirer des pv (hero_qui_attaque, monstre_attaqué)
+    #resultat de l'attaque
+
+#verification mort equipe_hero
+    #si equipe_hero_en_jeux == []
+        #afficher vous etes mort
+        #statut_equipe_hero == faux
+        #retourner statut_equipe_hero
+
+
+
+#verifier mort equipe monstre
+    #si monstres_en_jeux == []
+        #manche  = manche + 1
+        #vous avez gagner la premiere manche, voici la prochaine equipe a affronter
+        #créer équipe monstres
+        #afficher nouvelle equipe monstres
 
 
 #choisir sur qui lancer l'attaque
     #afficher des proposition(monstres_en_jeux)
     #monstre_attaqué = demander un choix valide(options)
+    #retourner monstre_attaqué
 
 
 #choisir quel hero attaque
     #afficher des proposition(equipe_hero_en_jeux)
     #hero_qui_attaque = demander un choix valide(options)
+    #retourner hero_qui_attaque
+
+
+
+#retirer des pv (attaquant, cible)
+    #degats = attaque de l'attaquant
+    #pv de la cible = pv de la cible - degats
+
+    #si pv de la cible <= 0
+        #pv de la cible = 0
+        #afficher ce personnage est mort
+        #ajouter la cible a la liste mort
+
+    #afficher nom de la cible et pv restants
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#resultat
+    #afficher message d'encouragement, et nombre de manche reussite
+    #ajouter à derniers_scores
