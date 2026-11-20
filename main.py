@@ -177,7 +177,7 @@ def definir_premier_qui_attaque():
 
 
 def combat(equipe_heros, equipe_monstres, equipe_commence):
-    manche = 1
+    manche = 0
     statut_equipe_hero = True
     mort = []
 
@@ -192,8 +192,8 @@ def combat(equipe_heros, equipe_monstres, equipe_commence):
         statut_equipe_hero = verification_mort_equipe_hero(equipe_heros, mort)
 
         if statut_equipe_hero == True and verifier_mort_equipe_monstre(equipe_monstres, mort):
-            manche = manche + 1
-            print("\nVous avez gagné la manche", manche - 1,"! Voici la prochaine équipe à affronter.")
+            manche = manche
+            print("\nVous avez gagné la manche", manche,"! Voici la prochaine équipe à affronter.")
             equipe_monstres, nom_equipe_monstres = creer_equipe_monstres(equipe_heros)
             print("Nouvelle équipe de monstres :", nom_equipe_monstres)
 
@@ -307,7 +307,7 @@ def retirer_pv(attaquant, cible, mort):
 
 
 def resultat(pseudo, nom_equipe_heros, manche):
-    manches_reussies = manche - 1
+    manches_reussies = manche 
 
     print("Bravo", pseudo, "! L'équipe", nom_equipe_heros, "a réussi", manches_reussies, "manche(s).")
 
