@@ -8,7 +8,7 @@ db = client["Data"]
 personnages = db["personnages"].find_one()["personnages"] 
 monstres = db["Monstres"].find_one()["monstres"]      
 nom_personnages = [perso["nom"] for perso in personnages]
-nom_random_monstres = db["NomsEquipesMonstres"].find_one()["noms_equipes_monstres"]
+nom_random_monstres = db["nom_monstres"].find_one()["noms_equipes_monstres"]
 MENU = ["Jouer","meilleurs scores", "quitter"]
 
 derniers_scores = []
@@ -47,24 +47,22 @@ def verifier_si_choix_valide(choix, liste_choix):
 
 
 def lancer_le_choix(choix):
-    if choix == 1 :
+    if choix == 1:
         jeu()
-        print("vous avez choisis de jouer !")
-    elif choix == 2 :
-        #meilleurs scores
+    elif choix == 2:
         print("vous avez choisis 2 !")
-    elif choix == 3 :
-        #retourner faux
-        print("vous avez choisis 3 !")
+    elif choix == 3:
+        return False
+    return True
 
 
 
 
 
 def jeu():
-    equipe_heros, equipe_monstres, nom_equipe_heros, nom_equipe_monstres, equipe_commence = demarrer_jeu()
-    #combat
-    #resultat
+    pseudo, equipe_heros, equipe_monstres, nom_equipe_heros, nom_equipe_monstres, equipe_commence = demarrer_jeu()
+    manche = combat(equipe_heros, equipe_monstres, equipe_commence)
+    resultat(pseudo, nom_equipe_heros, manche)
 
 
 def demarrer_jeu():
@@ -73,11 +71,9 @@ def demarrer_jeu():
     equipe_monstres, nom_equipe_monstres = creer_equipe_monstres(equipe_heros)
 
     print(nom_equipe_heros, "VS", nom_equipe_monstres)
-    print(equipe_heros)
-    print(equipe_monstres)
 
     equipe_commence = definir_premier_qui_attaque()
-    return equipe_heros, equipe_monstres, nom_equipe_heros, nom_equipe_monstres, equipe_commence
+    return pseudo, equipe_heros, equipe_monstres, nom_equipe_heros, nom_equipe_monstres, equipe_commence
 
 
 def creer_equipe_heros():
@@ -180,6 +176,113 @@ def definir_premier_qui_attaque():
 
 
 
+def combat(equipe_heros, equipe_monstres, equipe_commence):
+    manche = 1
+    statut_equipe_hero = True
+    mort = []
+
+    while statut_equipe_hero == True:
+        if equipe_commence == True:
+            tour_heros(equipe_heros, equipe_monstres, mort)
+            tour_monstres(equipe_monstres, equipe_heros, mort)
+        elif equipe_commence == False:
+            tour_monstres(equipe_monstres, equipe_heros, mort)
+            tour_heros(equipe_heros, equipe_monstres, mort)
+
+        statut_equipe_hero = verification_mort_equipe_hero(equipe_heros, mort)
+
+        if statut_equipe_hero == True and verifier_mort_equipe_monstre(equipe_monstres, mort):
+            manche = manche + 1
+            print("\nVous avez gagné la manche", manche - 1,"! Voici la prochaine équipe à affronter.")
+            equipe_monstres, nom_equipe_monstres = creer_equipe_monstres(equipe_heros)
+            print("Nouvelle équipe de monstres :", nom_equipe_monstres)
+
+    return manche
+
+
+
+def tour_heros(equipe_heros, equipe_monstres, mort):
+    if verifier_mort_equipe_monstre(equipe_monstres, mort):
+        return
+
+    equipe_hero_en_jeux = determiner_disponibilite(equipe_heros, mort)
+    monstres_en_jeux = determiner_disponibilite(equipe_monstres, mort)
+
+    print("\nC'est au tour des héros")
+    attaque(equipe_hero_en_jeux, monstres_en_jeux, mort)
+
+
+def tour_monstres(equipe_monstres, equipe_heros, mort):
+    if verification_mort_equipe_hero(equipe_heros, mort) == False or verifier_mort_equipe_monstre(equipe_monstres, mort):
+        return
+
+    equipe_hero_en_jeux = determiner_disponibilite(equipe_heros, mort)
+    monstres_en_jeux = determiner_disponibilite(equipe_monstres, mort)
+
+    print("\nC'est au tour des monstres")
+    attaque_random(monstres_en_jeux, equipe_hero_en_jeux, mort)
+
+
+def attaque_random(monstres_en_jeux, equipe_hero_en_jeux, mort):
+    monstre = choix_random(monstres_en_jeux)
+    hero = choix_random(equipe_hero_en_jeux)
+
+    retirer_pv(monstre, hero, mort)
+
+
+def attaque(equipe_hero_en_jeux, monstres_en_jeux, mort):
+    hero = choisir_quel_hero_attaque(equipe_hero_en_jeux)
+    monstre_attaque = choisir_sur_qui_attaquer(monstres_en_jeux)
+
+    retirer_pv(hero, monstre_attaque, mort)
+
+
+def verification_mort_equipe_hero(equipe_heros, mort):
+    equipe_hero_en_jeux = determiner_disponibilite(equipe_heros, mort)
+    statut_equipe_hero = True
+
+    if equipe_hero_en_jeux == []:
+        print("Vous êtes mort...")
+        statut_equipe_hero = False
+
+    return statut_equipe_hero
+
+
+
+def verifier_mort_equipe_monstre(equipe_monstres, mort):
+    monstres_en_jeux = determiner_disponibilite(equipe_monstres, mort)
+
+    if monstres_en_jeux == []:
+        return True
+
+    return False
+
+
+def choisir_sur_qui_attaquer(monstres_en_jeux):
+    noms = [monstre["nom"] for monstre in monstres_en_jeux]
+    choix = recuperer_choix_valide_parmis_options(noms, "Quelle cible ? ")
+    return monstres_en_jeux[choix - 1]
+
+
+def choisir_quel_hero_attaque(equipe_hero_en_jeux):
+    noms = [hero["nom"] for hero in equipe_hero_en_jeux]
+    choix = recuperer_choix_valide_parmis_options(noms, "Quel héros attaque ? ")
+    return equipe_hero_en_jeux[choix - 1]
+
+
+
+def retirer_pv(attaquant, cible, mort):
+    degats = attaquant["pouvoir"]["degats"]
+    cible["pv"] = cible["pv"] - degats
+
+    print(attaquant["nom"], "attaque", cible["nom"], "et inflige", degats, "dégâts")
+
+    if cible["pv"] <= 0:
+        cible["pv"] = 0
+        print(cible["nom"], "est mort !")
+        mort.append(cible)
+
+    print(cible["nom"], "a maintenant", cible["pv"], "PV")
 
 
 
@@ -188,93 +291,6 @@ def definir_premier_qui_attaque():
 
 
 
-#combat
-    #manche = 1
-    #tant que statut_equipe_hero == vrais
-        #mort = []
-        #si equipe_commence == vrais :
-            #tour heros
-            #tour monstres
-
-        #sinon:
-            #tour monstres
-            #tour heros
-
-    #retourner manche
-
-
-
-
-#tour heros
-        #equipe_hero_en_jeux = determiner disponibilité ( equipe_hero, mort)
-        #monstres_en_jeux = determiner disponibilité ( equipe_monstres, mort)
-        #verifier mort equipe monstres
-        #afficher "c'est au tour des heros"
-        #attaque
-
-
-#tour monstres
-        #equipe_hero_en_jeux = determiner disponibilité ( equipe_hero, mort)
-        #monstres_en_jeux = determiner disponibilité ( equipe_monstres, mort)
-        #verifier mort equipe monstres
-        #afficher c'est au tour des monstres
-        #attaque random
-        #equipe_hero_en_jeux = determiner disponibilité ( equipe_hero, mort)
-        #verification mort equipe_hero
-
-
-#attaque random
-    #choix random sur qui lancer l'attaque
-    #choix random de qui lance l'attaque
-    #retirer des pv (hero_qui_attaque, monstre_attaqué)
-    #resultat de l'attaque
-
-
-#attaque
-    #choisir sur qui lancer l'attaque
-    #choisir quel hero attaque
-    #retirer des pv (hero_qui_attaque, monstre_attaqué)
-    #resultat de l'attaque
-
-#verification mort equipe_hero
-    #si equipe_hero_en_jeux == []
-        #afficher vous etes mort
-        #statut_equipe_hero == faux
-        #retourner statut_equipe_hero
-
-
-
-#verifier mort equipe monstre
-    #si monstres_en_jeux == []
-        #manche  = manche + 1
-        #vous avez gagner la premiere manche, voici la prochaine equipe a affronter
-        #créer équipe monstres
-        #afficher nouvelle equipe monstres
-
-
-#choisir sur qui lancer l'attaque
-    #afficher des proposition(monstres_en_jeux)
-    #monstre_attaqué = demander un choix valide(options)
-    #retourner monstre_attaqué
-
-
-#choisir quel hero attaque
-    #afficher des proposition(equipe_hero_en_jeux)
-    #hero_qui_attaque = demander un choix valide(options)
-    #retourner hero_qui_attaque
-
-
-
-#retirer des pv (attaquant, cible)
-    #degats = attaque de l'attaquant
-    #pv de la cible = pv de la cible - degats
-
-    #si pv de la cible <= 0
-        #pv de la cible = 0
-        #afficher ce personnage est mort
-        #ajouter la cible a la liste mort
-
-    #afficher nom de la cible et pv restants
 
 
 
@@ -290,21 +306,12 @@ def definir_premier_qui_attaque():
 
 
 
+def resultat(pseudo, nom_equipe_heros, manche):
+    manches_reussies = manche - 1
 
+    print("Bravo", pseudo, "! L'équipe", nom_equipe_heros, "a réussi", manches_reussies, "manche(s).")
 
-
-
-
-
-
-
-#resultat
-    #afficher message d'encouragement, et nombre de manche reussite
-    #ajouter à derniers_scores
-
-
-
-
+    derniers_scores.append([pseudo, manches_reussies])
 
 
 
