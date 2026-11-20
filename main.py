@@ -1,13 +1,14 @@
 from pymongo import MongoClient
+import random
 
 #initialisation de la bdd
 client = MongoClient("mongodb://localhost:27017/")
-db = client["test"]
+db = client["Data"]
 
-personnages = list(db["personnages"].find())
-monstres = list(db["monstres"].find())
-nom_random_monstres =[]
-
+personnages = db["personnages"].find_one()["personnages"] 
+monstres = db["Monstres"].find_one()["monstres"]      
+nom_personnages = [perso["nom"] for perso in personnages]
+nom_random_monstres = db["NomsEquipesMonstres"].find_one()["noms_equipes_monstres"]
 MENU = ["Jouer","meilleurs scores", "quitter"]
 
 derniers_scores = []
@@ -21,17 +22,16 @@ def menu():
 
 
 def afficher_des_propositions(propositions):
-    for i, proposition in enumerate(propositions):
+    for i, proposition in enumerate(propositions, start = 1):
         print(i, " - ", proposition)
-        i =+ 1
-        return i
 
 
 def demander_choix_valide(option):
     while True :
         afficher_des_propositions(option)
         choix = input("entrez votre choix : ")
-        verifier_si_choix_valide(choix, option)
+        if verifier_si_choix_valide(choix, option) :
+            return int(choix)
         print("erreur, réessayez !")
 
 
@@ -40,7 +40,7 @@ def verifier_si_choix_valide(choix, liste_choix):
         return False
 
     choix = int(choix)
-    if not 1 <= choix < len(liste_choix):
+    if not 1 <= choix <= len(liste_choix):
         return False
 
     return True
@@ -48,8 +48,8 @@ def verifier_si_choix_valide(choix, liste_choix):
 
 def lancer_le_choix(choix):
     if choix == 1 :
-        #jeu
-        print("vous avez choisis 1 !")
+        jeu()
+        print("vous avez choisis de jouer !")
     elif choix == 2 :
         #meilleurs scores
         print("vous avez choisis 2 !")
@@ -61,83 +61,110 @@ def lancer_le_choix(choix):
 
 
 
-#jeu
-    #démarrage du jeu
+def jeu():
+    equipe_heros, equipe_monstres, nom_equipe_heros, nom_equipe_monstres, equipe_commence = demarrer_jeu()
     #combat
     #resultat
 
 
-#démarrage du jeu
-    #demander un pseudo
-    #créer équipe heros
-    #créer équipe monstres
-    #afficher équipe heros vs équipe monstres
-    #définir le premier qui attaque
-    #retourner la liste hero, la liste monstre, le nom des équipe et equipe_commence
+def demarrer_jeu():
+    pseudo = input("Entrez votre pseudo : ")
+    equipe_heros, nom_equipe_heros = creer_equipe_heros()
+    equipe_monstres, nom_equipe_monstres = creer_equipe_monstres(equipe_heros)
+
+    print(nom_equipe_heros, "VS", nom_equipe_monstres)
+    print(equipe_heros)
+    print(equipe_monstres)
+
+    equipe_commence = definir_premier_qui_attaque()
+    return equipe_heros, equipe_monstres, nom_equipe_heros, nom_equipe_monstres, equipe_commence
+
+
+def creer_equipe_heros():
+    equipe_heros = []
+    nom_equipe = input("Entrez le nom de votre équipe : ")
+    nombre_combattants = demander_nombre_combattant_valide(5)
+
+    for i in range(nombre_combattants):
+        heros_disponibles = determiner_disponibilite(personnages, equipe_heros)
+        noms = [heros["nom"] for heros in heros_disponibles]
+        choix = recuperer_choix_valide_parmis_options(noms, "Quel combattant voulez-vous ? ")
+        equipe_heros.append(heros_disponibles[choix - 1])
+
+    return equipe_heros, nom_equipe
+
+
+def determiner_disponibilite(liste_A, liste_B):
+    disponible = []
+
+    for elements in liste_A:
+        if elements not in liste_B:
+            disponible.append(elements)
+
+    return disponible
 
 
 
-#créer équipe heros
-    #equipe_heros = []
-    #demander un nom d'équipe
-    #demander un nombre de combattant valide (max 5)
-    #tant que i n'est pas égale nombre de combattant choisis
-        #heros_disponibles = determiner disponibilité (personnage, personnages, equipe)
-        #recuperer un choix valide parmis options(heros_disponibles)
-        #ajouter le personnage a la liste hero
-    #retourner la liste hero et nom d'équipe
+def demander_nombre_combattant_valide(maximum):
+    while True:
+        choix = input("Combien de combattants voulez-vous ? Maximum 5 : ")
+
+        if verifier_si_choix_valide(choix, list(range(1, maximum + 1))):
+            return int(choix)
+
+        print("Erreur, réessayez !")
+
+
+def recuperer_choix_valide_parmis_options(options, question="Quel est votre choix ? "):
+    afficher_des_propositions(options)
+
+    choix = input(question)
+
+    while not verifier_si_choix_valide(choix, options):
+        print("Erreur, réessayez !")
+        afficher_des_propositions(options)
+        choix = input(question)
+
+    return int(choix)
+
+
+def creer_equipe_monstres(equipe_heros):
+    equipe_monstres = []
+
+    nom_equipe = choix_random(nom_random_monstres)
+
+    while len(equipe_monstres) < len(equipe_heros):
+        monstre = choix_random(monstres)
+
+        if monstre not in equipe_monstres:
+            equipe_monstres.append(monstre)
+
+    return equipe_monstres, nom_equipe
+
+
+def choix_random(liste):
+
+    i = random.randint(0, len(liste) - 1)
+
+    element_choisis = liste[i]
+
+    return element_choisis
 
 
 
-#determiner disponibilité (elements, liste_A, liste_B)
-    #disponible
-    #pour elements dans liste_A
-        #si elements n'est pas dans liste_B
-            #ajouter elements dans disponible
-    
-    #retourner disponible
+def definir_premier_qui_attaque():
 
+    i = random.choice([True, False])
 
+    if i == True:
+        equipe_commence = True
+        print("Les joueurs attaquent en premier !")
+        return equipe_commence
 
-#demander un nombre de combattant valide (max 5)
-    #input("combien de combattant voulez vous ? maximum 5")
-    #verifier si choix est valide
-    #retourner le nombre de combattant choisis
+    equipe_commence = False
+    print("Les monstres attaquent en premier !")
 
-
-#recuperer un choix valide parmis options(Personnages)
-    #afficher des proposition(hero_disponibles)
-    #input(quel combattant voulez vous ?)
-    #verifier si choix est valide
-    #retourner le choix
-
-
-#créer équipe monstres
-    #équipe_monstres = []
-    #choisir un nom random
-    #tant que i n'est pas égale a la longueure de la liste hero
-        #choisir un monstre random
-        #ajouter le monstre a la liste équipe_monstres
-    #retourner équipe monstres et nom random
-
-
-#choix random (list)
-    #i = chiffre random compris entre 1 et le nombre totale de nom possible
-    #element_choisis = liste de nom [i]
-    #retourner nom
-
-
-
-#définir le premier qui attaque
-    #i = choix random entre vrais et faux
-    #si i == vrais
-        #equipe_commence == vrais
-        #afficher joueur attaque en premier
-        #retourner equipe_commence
-
-    #equipe_commence == faux    
-    #afficher monstres attaquent en premier
-    #retourner equipe_commence
+    return equipe_commence
 
 
 
